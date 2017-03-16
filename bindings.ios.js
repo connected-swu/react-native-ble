@@ -216,15 +216,21 @@ function toAppleUuid(uuid) {
  return uuid.replace(/(\S{8})(\S{4})(\S{4})(\S{4})(\S{12})/, "$1-$2-$3-$4-$5").toUpperCase();
 }
 
+function matchesAppleUuid(uuid) {
+  return /^[^\s-]{8}-[^\s-]{4}-[^\s-]{4}-[^\s-]{4}-[^\s-]{12}$/.test(uuid)
+}
+
 function toAppleUuids(uuids) {
   var convertedUuids = [];
-
   if (uuids) {
     uuids.forEach(function(uuid) {
-      convertedUuids.push(toAppleUuid(uuid));
+      if (matchesAppleUuid(uuid)) {
+        convertedUuids.push(uuid);
+      } else {
+        convertedUuids.push(toAppleUuid(uuid));
+      }
     });
   }
-
   return convertedUuids;
 }
 
